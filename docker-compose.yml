@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  app:
+    build: .
+    container_name: node-app
+    restart: always
+    ports: 
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=22082001
+      - DB_NAME=rest_api2_db
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15
+    container_name: postgres-container2
+    restart: always
+    environment:
+      POSTGRES_USER: postgres      
+      POSTGRES_PASSWORD: 22082001  
+      POSTGRES_DB: rest_api2_db        
+    ports:
+      - "5432:5432"  
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+
+volumes:
+  postgres_data:

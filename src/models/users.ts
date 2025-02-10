@@ -3,7 +3,7 @@ import {drizzle} from "drizzle-orm/node-postgres";
 import {Pool} from "pg";
 import { primaryKey } from "drizzle-orm/mysql-core";
 import {db} from '../db/connection';
-import {eq, relations} from 'drizzle-orm';
+import {asc, eq, relations} from 'drizzle-orm';
 import { InferInsertModel } from "drizzle-orm";
 import { todos } from "./todos";
 
@@ -22,7 +22,7 @@ export const usersRelations = relations(users, ({many}) => ({
 
 
 export const getUsers = async () => {
-    return await db.select().from(users);
+    return (await db.select().from(users).orderBy(asc(users.id)));
 };
 
 export const getUserByEmail = async (email: string) => {

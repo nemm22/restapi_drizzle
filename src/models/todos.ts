@@ -2,7 +2,7 @@ import {pgTable, serial, text, varchar, boolean, primaryKey, integer} from "driz
 import {drizzle} from "drizzle-orm/node-postgres";
 import {Pool} from "pg";
 import {db} from '../db/connection';
-import {eq} from 'drizzle-orm';
+import {eq, asc} from 'drizzle-orm';
 import {relations } from "drizzle-orm";
 import {InferInsertModel} from "drizzle-orm";
 import { users } from "./users";
@@ -26,7 +26,7 @@ export const todosRelations =  relations(todos,({one}) =>({
 }));
 
 export const getTodosByUserId = async (id: number) => {
-    return await db.select().from(todos).where(eq(todos.userId,id));
+    return await db.select().from(todos).where(eq(todos.userId,id)).orderBy(asc(todos.id));
 }
 
 export const getTodoById = async(id:number) => {

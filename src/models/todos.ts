@@ -12,7 +12,7 @@ export const todos = pgTable("todos",{
     title: varchar("title",{length:255}).notNull(),
     description: varchar("description",{length:255}),
     completed: boolean("completed").notNull().default(false),
-    userId: integer("userId").notNull()
+    userId: integer("userId").notNull().references(() => users.id, {onDelete: "cascade"})
 })
 
 type NewTodo = typeof todos.$inferInsert;

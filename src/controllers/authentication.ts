@@ -47,7 +47,15 @@ export const register = async(req:express.Request, res:express.Response) => {
             return res.sendStatus(400);
         }
 
-        const existingUser = await getUserByEmail(email);
+        const formatEmail = email.toString().toLowerCase();
+        const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+
+        if(!emailRegex.test(formatEmail)){
+            return res.status(400).json({message: 'Wrong email format'});
+        }
+
+        const existingUser = await getUserByEmail(formatEmail);
         if(existingUser){
             console.log("User already exists");
             console.log(existingUser);
@@ -59,7 +67,7 @@ export const register = async(req:express.Request, res:express.Response) => {
         
 
         const user = createUser({
-            email,
+            email: formatEmail,
             username,
             password: hashedPassword
         })

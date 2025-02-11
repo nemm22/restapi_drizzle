@@ -37,9 +37,9 @@ export const newTodo = async (req: express.Request, res: express.Response) => {
         var todo = await createTodo({title:title, userId:parseInt(id)});
         console.log('todo kreiran');
         todo.description = description;
-        await updateTodoById(todo.id, todo);
+        const updatedTodo = await updateTodoById(todo.id, todo);
         
-        return res.status(200).json(updateTodo).end();
+        return res.status(200).json(todo).end();
         
     } catch (error) {
         console.log(error);

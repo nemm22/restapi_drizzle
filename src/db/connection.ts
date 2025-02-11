@@ -10,7 +10,7 @@ export const pool = new Pool({
 export const db = drizzle(pool);
 
 pool.on("connect", () => {
-    console.log("Connected to PostgreSQL database!");
+    console.log("Connection established!");
 });
   
   pool.on("error", (err) => {

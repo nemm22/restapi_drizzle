@@ -57,7 +57,8 @@ export const updateTodo = async (req: express.Request, res: express.Response) =>
 
         return res.status(200).json(updatedTodo).end();
     } catch (error) {
-        
+        console.log(error);
+        return res.sendStatus(400);
     }
 }
 

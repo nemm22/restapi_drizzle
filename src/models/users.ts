@@ -9,7 +9,7 @@ import { todos } from "./todos";
 
 export const users = pgTable("users",{
     id: serial("id").primaryKey(),
-    username: varchar("username", {length: 255}).notNull(),
+    username: varchar("username", {length: 255}).notNull().unique(),
     email: varchar("email", {length:255}).notNull().unique(),
     password: text("password").notNull(),
     sessionToken: text("sessionToken"),
@@ -57,6 +57,4 @@ export const deleteUserById = async(id: number) => {
 export const updateUserById = async (id: number, updated: InferInsertModel<typeof users>) => {
     return await db.update(users).set(updated).where(eq(users.id,id)).returning();
 };
-
-
 

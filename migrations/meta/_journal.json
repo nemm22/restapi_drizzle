@@ -64,6 +64,13 @@
       "when": 1739275701616,
       "tag": "0008_daffy_brood",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1739357023801,
+      "tag": "0009_sleepy_champions",
+      "breakpoints": true
     }
   ]
 }

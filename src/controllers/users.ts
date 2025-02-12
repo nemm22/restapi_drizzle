@@ -5,7 +5,10 @@ export const getAllUsers = async(req: express.Request,res: express.Response) => 
     try {
         var users = await getUsers();
 
-        return res.status(200).json(users);
+        const userShow = users.map(({id, username,email}) => ({id,username,email}));
+        
+
+        return res.status(200).json(userShow);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

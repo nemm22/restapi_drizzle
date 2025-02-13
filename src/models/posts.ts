@@ -12,8 +12,7 @@ export const posts = pgTable("posts",{
     text: varchar("text",{length:255}).notNull(),
     createdAt: timestamp("created").notNull().defaultNow(),
     updatedAt: timestamp("updated").notNull().defaultNow(),
-    userId: integer("userId").notNull().references(() => users.id, {onDelete: "cascade"}),
-    tagId: integer("tagId").notNull().references(() => tags.id)
+    userId: integer("userId").notNull().references(() => users.id, {onDelete: "cascade"})
 })
 
 export const postsRelations =  relations(posts,({one,many}) =>({
@@ -48,7 +47,4 @@ export const deletePostById = async(id: number) => {
     return db.delete(posts).where(eq(posts.id,id));
 }
 
-export const getPostsByTagId = async(tagId: number) => {
-    return db.select().from(posts).where(eq(posts.tagId,tagId)).orderBy(desc(posts.id));
-}
 

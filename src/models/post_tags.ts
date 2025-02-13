@@ -29,3 +29,7 @@ export const getTagsByPostId = async(postId: number) => {
 export const newPostTags = async(values:InferInsertModel<typeof postTags>) => {
     return db.insert(postTags).values(values).returning();
 }
+
+export const deletePostTags = async (postId: number) => {
+    return db.delete(posts).where(eq(postTags.postId,postId));
+}

@@ -2,6 +2,7 @@ import express from 'express';
 import {get, identity, merge} from 'lodash';
 import { getUserBySessionToken } from '../models/users';
 import { getTodoById } from '../models/todos';
+import { getPostbyId } from 'models/posts';
 
 
 declare global{
@@ -93,6 +94,35 @@ export const ownsTodo = async(req: express.Request, res: express.Response, next:
     }
 }
 
+
+export const ownsPost = async(req:express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+
+        const {id} = req.body;
+        const sessionToken = req.cookies['NEMANJA-AUTH'];
+
+        if(!id || !sessionToken){
+            return res.status(403);
+        }
+
+        const currentUser = await getUserBySessionToken(sessionToken);
+
+        if(!currentUser ){
+            return res.status(403);
+        }
+
+        if(currentUser.id !== id ){
+            return res.status(403);
+        }
+
+        console.log('User owns post')
+        return next();
+        
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
 
 
 

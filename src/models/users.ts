@@ -6,6 +6,7 @@ import {db} from '../db/connection';
 import {asc, eq, relations} from 'drizzle-orm';
 import { InferInsertModel } from "drizzle-orm";
 import { todos } from "./todos";
+import {posts} from "./posts";
 
 export const users = pgTable("users",{
     id: serial("id").primaryKey(),
@@ -18,6 +19,7 @@ export const users = pgTable("users",{
 
 export const usersRelations = relations(users, ({many}) => ({
     todos: many(todos),
+    posts: many(posts)
 }));
 
 
@@ -55,6 +57,7 @@ export const deleteUserById = async(id: number) => {
 };
 
 export const updateUserById = async (id: number, updated: InferInsertModel<typeof users>) => {
-    return await db.update(users).set(updated).where(eq(users.id,id)).returning();
+    const result =  await db.update(users).set(updated).where(eq(users.id,id)).returning();
+    return result[0];
 };
 

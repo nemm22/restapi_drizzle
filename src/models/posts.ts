@@ -47,3 +47,8 @@ export const updatePostById = async(id: number,values: InferInsertModel<typeof p
 export const deletePostById = async(id: number) => {
     return db.delete(posts).where(eq(posts.id,id));
 }
+
+export const getPostsByTagId = async(tagId: number) => {
+    return db.select().from(posts).where(eq(posts.tagId,tagId)).orderBy(desc(posts.id));
+}
+

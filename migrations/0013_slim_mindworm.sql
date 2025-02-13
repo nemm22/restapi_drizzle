@@ -1,0 +1,1 @@
+ALTER TABLE "post_tags" ADD CONSTRAINT "post_tags_postId_tagId_pk" PRIMARY KEY("postId","tagId");

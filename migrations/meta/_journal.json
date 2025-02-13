@@ -78,6 +78,13 @@
       "when": 1739439915437,
       "tag": "0010_solid_sandman",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1739441612418,
+      "tag": "0011_bent_vision",
+      "breakpoints": true
     }
   ]
 }

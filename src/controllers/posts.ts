@@ -1,7 +1,7 @@
 import express from 'express';
-import { createPost, getPostbyId, getPostsByUserId, updatePostById } from 'models/posts';
+import { createPost, deletePostById, getPostbyId, getPostsByUserId, updatePostById } from 'models/posts';
 import { getUserBySessionToken } from '../models/users';
-import { getPostByTagId, newPostTags } from 'models/post_tags';
+import { deletePostTags, getPostByTagId, newPostTags } from 'models/post_tags';
 import { date, timestamp } from 'drizzle-orm/mysql-core';
 
 
@@ -119,7 +119,26 @@ export const updatePost = async (req: express.Request, res: express.Response) =>
 }
 
 export const deletePost = async (req: express.Request, res: express.Response) => {
-    
+    try {
+        
+        const {id} = req.body;
+
+        const post = await getPostbyId(id);
+        if(!post){
+            return res.status(400).json({message: 'Error fetching post'});
+        }
+
+        const deletedPost = await deletePostById(id);
+
+        await deletePostTags(post.id);
+
+        return res.status(200).json(deletedPost).end();
+
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
 }
 
 

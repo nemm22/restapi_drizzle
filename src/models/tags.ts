@@ -35,5 +35,5 @@ export const deleteTagById = async(id: number) => {
 }
 
 export const getAllTags = async() => {
-    return db.select().from(tags);
+    return db.select().from(tags).orderBy(tags.id);
 }

@@ -27,10 +27,11 @@ export const getPost = async(req: express.Request, res: express.Response) => {
 
 export const getUsersPosts = async( req: express.Request, res: express.Response) => {
     try {
-        const {id} = req.params;
+        const currentUser = await getUserBySessionToken(req.cookies['NEMANJA-AUTH']);
+        const id = currentUser.id;
 
         console.log(id);
-        const posts = await getPostsByUserId(parseInt(id));
+        const posts = await getPostsByUserId(id);
 
         if(!posts || posts.length === 0){
             return res.status(404).json({message: "No posts"});

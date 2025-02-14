@@ -4,8 +4,8 @@ import { isAuthenticated, isOwner, ownsTodo } from '../middlewares';
 
 
 export default (router: express.Router) => {
-    router.get('/todos/:id', isAuthenticated, isOwner, getUsersTodos);
-    router.post('/todos/:id',isAuthenticated, isOwner, newTodo);
+    router.get('/todos/', isAuthenticated, getUsersTodos);
+    router.post('/todos/',isAuthenticated, newTodo);
     router.patch('/todos/', isAuthenticated, ownsTodo,updateTodo);
     router.delete('/todos/',isAuthenticated, ownsTodo,deleteTodo);
 }

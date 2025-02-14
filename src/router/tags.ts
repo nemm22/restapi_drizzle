@@ -1,4 +1,4 @@
-import { getTag, newTag, updateTag, deleteTag} from 'controllers/tags';
+import { getTag, newTag, updateTag, deleteTag} from '../controllers/tags';
 import express from 'express';
 import { isAuthenticated,isOwner,ownsPost } from "../middlewares";
 

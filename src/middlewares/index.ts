@@ -2,7 +2,7 @@ import express from 'express';
 import {get, identity, merge} from 'lodash';
 import { getUserBySessionToken } from '../models/users';
 import { getTodoById } from '../models/todos';
-import { getPostbyId } from 'models/posts';
+import { getPostbyId } from '../models/posts';
 
 
 declare global{
@@ -25,7 +25,7 @@ export const isOwner = async(req: express.Request, res: express.Response, next: 
         if(curentUserId!=id){
             return res.sendStatus(403);
         }
-
+        console.log('owner');
         next();
     } catch (error) {
         console.log(error);
@@ -106,12 +106,13 @@ export const ownsPost = async(req:express.Request, res: express.Response, next: 
         }
 
         const currentUser = await getUserBySessionToken(sessionToken);
+        const currentPost = await getPostbyId(id);
 
-        if(!currentUser ){
+        if(!currentUser || !currentPost){
             return res.status(403);
         }
 
-        if(currentUser.id !== id ){
+        if(currentUser.id !== currentPost.userId ){
             return res.status(403);
         }
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { createTag, deleteTagById, gettagById, updateTagById } from 'models/tags';
+import { createTag, deleteTagById, gettagById, updateTagById } from '../models/tags';
 
 export const getTag =  async (req: express.Request, res: express.Response) => {
     try {

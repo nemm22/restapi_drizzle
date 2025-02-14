@@ -3,7 +3,7 @@ import {users} from "./users";
 import {tags} from "./tags";
 import {eq, asc, desc, InferInsertModel} from 'drizzle-orm';
 import {relations } from "drizzle-orm";
-import { db } from "db/connection";
+import { db } from "../db/connection";
 
 
 export const posts = pgTable("posts",{

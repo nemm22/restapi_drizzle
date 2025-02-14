@@ -1,7 +1,7 @@
 import express from 'express';
-import { createPost, deletePostById, getPostbyId, getPostsByUserId, updatePostById } from 'models/posts';
+import { createPost, deletePostById, getPostbyId, getPostsByUserId, updatePostById } from '../models/posts';
 import { getUserBySessionToken } from '../models/users';
-import { deletePostTags, getPostByTagId, newPostTags } from 'models/post_tags';
+import { deletePostTags, getPostByTagId, newPostTags } from '../models/post_tags';
 import { date, timestamp } from 'drizzle-orm/mysql-core';
 
 
@@ -27,10 +27,10 @@ export const getPost = async(req: express.Request, res: express.Response) => {
 
 export const getUsersPosts = async( req: express.Request, res: express.Response) => {
     try {
-        const {userId} = req.params;
+        const {id} = req.params;
 
-        console.log(userId);
-        const posts = await getPostsByUserId(parseInt(userId));
+        console.log(id);
+        const posts = await getPostsByUserId(parseInt(id));
 
         if(!posts || posts.length === 0){
             return res.status(404).json({message: "No posts"});
@@ -85,7 +85,10 @@ export const newPost = async(req: express.Request, res: express.Response) => {
 
         const postId = post.id;
 
-        tagsIds.map((tagId) => newPostTags({postId,tagId}));
+        if(tagsIds){
+            tagsIds.map((tagId) => newPostTags({postId,tagId}));
+        }
+
 
         return res.status(200).json(post).end();
         
@@ -129,8 +132,6 @@ export const deletePost = async (req: express.Request, res: express.Response) =>
         }
 
         const deletedPost = await deletePostById(id);
-
-        await deletePostTags(post.id);
 
         return res.status(200).json(deletedPost).end();
 

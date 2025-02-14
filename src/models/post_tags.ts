@@ -27,6 +27,7 @@ export const getTagsByPostId = async(postId: number) => {
 }
 
 export const newPostTags = async(values:InferInsertModel<typeof postTags>) => {
+    console.log("Post tags kreiran");
     return db.insert(postTags).values(values).returning();
 }
 

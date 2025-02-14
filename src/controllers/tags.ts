@@ -1,5 +1,5 @@
 import express from 'express';
-import { createTag, deleteTagById, gettagById, updateTagById } from '../models/tags';
+import { createTag, deleteTagById, getAllTags, gettagById, updateTagById } from '../models/tags';
 
 export const getTag =  async (req: express.Request, res: express.Response) => {
     try {
@@ -92,6 +92,22 @@ export const deleteTag =  async(req: express.Request, res: express.Response) => 
 
         return res.status(200).json(deletedTag).end();
 
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const showAllTags = async(req: express.Request, res: express.Response) => {
+    try {
+        const tags = await getAllTags();
+        
+        if(!tags){
+            return res.status(400).json({message: 'Error fetching tags'});
+        }
+
+        return res.status(200).json(tags);
+        
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

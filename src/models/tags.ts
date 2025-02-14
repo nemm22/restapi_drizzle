@@ -33,3 +33,7 @@ export const updateTagById = async(id: number, values: InferInsertModel<typeof t
 export const deleteTagById = async(id: number) => {
     return db.delete(tags).where(eq(tags.id,id));
 }
+
+export const getAllTags = async() => {
+    return db.select().from(tags);
+}

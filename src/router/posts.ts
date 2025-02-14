@@ -1,8 +1,9 @@
-import {  getUsersPosts,updatePost,deletePost,newPost } from "../controllers/posts";
+import {  getUsersPosts,updatePost,deletePost,newPost, getPostsByTag } from "../controllers/posts";
 import express from 'express';
 import { isAuthenticated,isOwner,ownsPost } from "../middlewares";
 
 export default(router: express.Router) => {
+    router.get('/posts/tag/:id', isAuthenticated, getPostsByTag);
     router.get('/posts/:id', isAuthenticated,isOwner, getUsersPosts);
     router.post('/posts/', isAuthenticated, newPost);
     router.patch('/posts/', isAuthenticated, ownsPost, updatePost);

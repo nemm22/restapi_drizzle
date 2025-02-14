@@ -46,12 +46,13 @@ export const getUsersPosts = async( req: express.Request, res: express.Response)
 
 export const getPostsByTag = async( req: express.Request, res: express.Response) => {
     try {
-        const {tagId} = req.params;
+        const {id} = req.params;
         
-        console.log(tagId);
-        const ids = await getPostByTagId(parseInt(tagId));
+        console.log(id);
+        const ids = await getPostByTagId(parseInt(id));
+        console.log(ids);
         
-        const posts = ids.map(({postId}) => getPostbyId(postId));
+        const posts = await Promise.all(ids.map(({postId}) => getPostbyId(postId)));
 
 
         if(!posts || posts.length === 0){
